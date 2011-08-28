@@ -1,0 +1,2 @@
+lua_number TO STRING dans LuaValue.hpp, line 64
+in HandleManager : <vector> needs push_back
