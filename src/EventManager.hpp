@@ -13,11 +13,11 @@ namespace blue {
 	class EventManager : public Singleton<EventManager> {
 	friend class Singleton<EventManager>;
 	// GLFW callbacks friended for InputStates access
-		friend void GLFWCALL KeyPressedCallback( int pKey, int pValue ); 
-		friend void GLFWCALL CharPressedCallback( int pKey, int pValue ); 
-		friend void GLFWCALL MousePressedCallback( int pKey, int pValue ); 
-		friend void GLFWCALL MouseWheelCallback( int pWheel ); 
-		friend void GLFWCALL MouseMovedCallback( int pX, int pY ); 
+		friend void KeyPressedCallback( int pKey, int pValue ); 
+		friend void CharPressedCallback( int pKey, int pValue ); 
+		friend void MousePressedCallback( int pKey, int pValue ); 
+		friend void MouseWheelCallback( int pWheel ); 
+		friend void MouseMovedCallback( int pX, int pY ); 
 
 	public:
 		// Input Query functions
@@ -32,8 +32,8 @@ namespace blue {
 			bool IsWheelUp() const;
 			bool IsWheelDown() const;
 
-			u32	 GetMouseX() const { return mCurrentState.mMousePos.x; }
-			u32	 GetMouseY() const { return mCurrentState.mMousePos.y; }
+			u32	 GetMouseX() const { return (u32)mCurrentState.mMousePos.x; }
+			u32	 GetMouseY() const { return (u32)mCurrentState.mMousePos.y; }
 
 		/// Add a Listener to the container, allowing it to be informed
 		void AddListener( Listener& pListener );
@@ -73,10 +73,10 @@ namespace blue {
 	};
 
 	// GLFW Callback functions
-		void GLFWCALL KeyPressedCallback( int pKey, int pValue ); 
-		void GLFWCALL CharPressedCallback( int pKey, int pValue ); 
-		void GLFWCALL MousePressedCallback( int pKey, int pValue ); 
-		void GLFWCALL MouseWheelCallback( int pWheel ); 
-		void GLFWCALL MouseMovedCallback( int pX, int pY ); 
+		void KeyPressedCallback( int pKey, int pValue ); 
+		void CharPressedCallback( int pKey, int pValue ); 
+		void MousePressedCallback( int pKey, int pValue ); 
+		void MouseWheelCallback( int pWheel ); 
+		void MouseMovedCallback( int pX, int pY ); 
 }
 #endif

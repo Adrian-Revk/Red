@@ -1,12 +1,12 @@
 #include "Context.hpp"
 
-#include "ext/GL/glew.h"
-#include "ext/GL/glfw.h"
+#include "GL/glew.h"
+#include "GL/glfw.h"
 
 #include <cstdio>
 
 namespace blue {
-	void GLFWCALL WindowResizeCallback( int pWidth, int pHeight ) {
+	void WindowResizeCallback( int pWidth, int pHeight ) {
 		Context::Call().SetSize( pWidth, pHeight );
 	}
 
@@ -27,6 +27,10 @@ namespace blue {
 		glfwTerminate();
 	}
 
+	bool Context::IsOpened() const {
+		return ! glfwGetWindowParam( GLFW_OPENED ) == 0;
+	}
+
 	bool Context::ResolutionAvailable( u32 pWidth, u32 pHeight ) {
 		if( mInit )
 			for( u32 i = 0; i < mVModes.size(); ++i ) 
@@ -40,7 +44,7 @@ namespace blue {
 		if ( mInit ) 
 			Destroy();
 
-		bool init = glfwInit();
+		int init = glfwInit();
 
 		if ( init ) {
 			if ( pFullscreen )
@@ -58,8 +62,8 @@ namespace blue {
 
 
 			// OpenGL Version
-			glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR, 1 );
-			glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR, 1 );
+			glfwOpenWindowHint( GLFW_OPENGL_VERSION_MAJOR, 3 );
+			glfwOpenWindowHint( GLFW_OPENGL_VERSION_MINOR, 2 );
 
 			
 			// FSAA

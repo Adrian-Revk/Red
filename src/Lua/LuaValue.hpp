@@ -1,8 +1,8 @@
 #ifndef LUAVALUE_HPP
 #define LUAVALUE_HPP
 
-#include "src/Shared.hpp"
-#include "ext/Lua/lua.hpp"
+#include "Shared.hpp"
+#include "Lua/lua.hpp"
 
 namespace blue {
 

@@ -1,4 +1,4 @@
-#include "ext/Lua/lua.hpp"
+#include "Lua/lua.hpp"
 
 namespace blue {
 	template <typename T> class Lunar {

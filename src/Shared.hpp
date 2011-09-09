@@ -10,11 +10,15 @@
 	// Platform
 	#if defined(_WIN32) || defined(WIN32)
 	#	define BLUE_WIN32
-	#	define GLFWCALL __stdcall
+//	#	ifndef GLFWCALL
+//	#		define GLFWCALL __stdcall
+//	#	endif
 	#	include <time.h>
 	#else
 	#	define BLUE_LINUX
-	#	define GLFWCALL
+//	#	ifndef GLFWCALL
+//	#		define GLFWCALL
+//	#	endif
 	#	include <sys/time.h>
 	#endif
 
@@ -24,7 +28,7 @@
 	#include <cstring>
 
 	// Math library
-	#include "ext/glm/glm.hpp"
+	#include "glm/glm.hpp"
 
 	// Engine Types
 	#include "Types.hpp"

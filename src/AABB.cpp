@@ -46,6 +46,6 @@ namespace blue {
 		mOrigin.y = ( pAABB.mOrigin.y + pAABB.mEnd.y ) / 2;
 		mOrigin.z = ( pAABB.mOrigin.z + pAABB.mEnd.z ) / 2;
 
-		mRadius = ( pAABB.mEnd - pAABB.mOrigin ).length();
+		mRadius = (f32)(( pAABB.mEnd - pAABB.mOrigin ).length());
 	}
 }

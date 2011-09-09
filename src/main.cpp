@@ -5,6 +5,7 @@
 #include "Lua/RedLua.hpp"
 
 #include "HandleManager.hpp"
+#include "GL/glew.h"
 
 
 using namespace blue;
@@ -49,8 +50,8 @@ int main ( int argc, char* argv[] ) {
 	LogManager::Call().Init();
 	Context::Call().Initialize( 800, 600 );
 
-	listtest t;
-	EventManager::Call().AddListener( t );
+	//listtest t;
+	//EventManager::Call().AddListener( t );
 
 	Lua lua;
 	lua.RegisterFunction( "function1", function1 );
@@ -63,10 +64,19 @@ int main ( int argc, char* argv[] ) {
 		printf( "%s\n", lua.CallFunction( "hur", "d", hur ).ToString().c_str() );
 	}
 	
+	int MVersion, mVersion;
+	glGetIntegerv( GL_MAJOR_VERSION, &MVersion );
+	glGetIntegerv( GL_MINOR_VERSION, &mVersion );
+
+	DebugLog << "OpenGL version " << MVersion << "." << mVersion << eol;
+	DebugLog << "GLSL " << glGetString( GL_SHADING_LANGUAGE_VERSION ) << eol;
+	DebugLog << "Hardware : " << glGetString( GL_VENDOR ) << " - " << glGetString( GL_RENDERER ) << eol;
+	
 	bool run = true;
 	while(run) {
-		run = !EventManager::Call().IsKeyUp( Escape ); 
+		run = !EventManager::Call().IsKeyUp( Escape ) && Context::Call().IsOpened(); 
 		
+
 		if( EventManager::Call().IsWheelUp() )
 			DebugLog << "wheelup" << eol;
 		if( EventManager::Call().IsWheelDown() )

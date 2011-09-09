@@ -23,6 +23,9 @@ namespace blue {
 
 		bool IsInitialized() const { return mInit; }
 
+		/// Return true if the GLFW window is currently opened
+		bool IsOpened() const;
+
 		/// Update the context. Call this every frame end
 		void Update();
 

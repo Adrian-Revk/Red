@@ -2,7 +2,7 @@
 #define AABB_HPP
 
 #include "Shared.hpp"
-#include "ext/glm/gtc/quaternion.hpp"
+#include "glm/gtc/quaternion.hpp"
 
 namespace blue {
 	struct Vertex;

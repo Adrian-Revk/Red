@@ -3,8 +3,8 @@
 namespace blue {
 	EventManager& EvtManager = EventManager::Call();
 
-	void GLFWCALL KeyPressedCallback( int pKey, int pValue ) {
-		EvtManager.mCurrentState.mKeyboardState[pKey] = pValue;
+	void KeyPressedCallback( int pKey, int pValue ) {
+		EvtManager.mCurrentState.mKeyboardState[pKey] = pValue ? true : false;
 
 		Event e;
 		e.mType = pValue ? Event::KeyPressed : Event::KeyReleased;
@@ -14,7 +14,7 @@ namespace blue {
 		EvtManager.PropagateEvent( e );
 	}
 
-	void GLFWCALL CharPressedCallback( int pChar, int pValue ) {
+	void CharPressedCallback( int pChar, int pValue ) {
 		Event e;
 		e.mType = Event::CharPressed;
 		e.mChar = pChar;
@@ -22,8 +22,8 @@ namespace blue {
 		EvtManager.PropagateEvent( e );
 	}
 
-	void GLFWCALL MousePressedCallback( int pButton, int pValue ) {
-		EvtManager.mCurrentState.mMouseState[pButton] = pValue;
+	void MousePressedCallback( int pButton, int pValue ) {
+		EvtManager.mCurrentState.mMouseState[pButton] = pValue ? true : false;
 
 		Event e;
 		e.mType = pValue ? Event::MousePressed : Event::MouseReleased;
@@ -32,7 +32,7 @@ namespace blue {
 		EvtManager.PropagateEvent( e );
 	}
 
-	void GLFWCALL MouseWheelCallback( int pWheel ) {
+	void MouseWheelCallback( int pWheel ) {
 		EvtManager.mCurrentState.mWheelState = pWheel;
 
 		Event e;
@@ -42,7 +42,7 @@ namespace blue {
 		EvtManager.PropagateEvent( e );
 	}
 		
-	void GLFWCALL MouseMovedCallback( int pX, int pY ) {
+	void MouseMovedCallback( int pX, int pY ) {
 		EvtManager.mCurrentState.mMousePos = glm::vec2( pX, pY );
 
 		Event e;
