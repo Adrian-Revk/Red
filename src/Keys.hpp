@@ -2,7 +2,7 @@
 #define KEYS_HPP
 
 
-namespace blue {
+namespace red {
 	/// Enumeration of the different mouse buttons
 	enum MouseButton{
 		LeftButton,

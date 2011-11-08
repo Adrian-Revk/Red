@@ -16,7 +16,7 @@
 #include <fstream>
 #include <sstream>
 
-namespace blue {
+namespace red {
 	/// Default Base Log name
 	const std::string defaultBaseLog = "Engine.log";
 

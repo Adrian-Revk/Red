@@ -5,7 +5,7 @@
 #include "Shared.hpp"
 #include <fstream>
 
-namespace blue {
+namespace red {
 	/// Read/Write file opening mode
 	enum ReadWriteMode{
 		RWM_Write,				///< Read/Write, make a new file or overwrite an existant one
@@ -47,7 +47,7 @@ namespace blue {
 		void Flush();
 
 		/// Returns the content of opened file in one string
-		std::string Read() const;
+		std::string Content() const;
 
 		/// Returns true if a file is opened
 		bool IsOpened() const;
@@ -65,10 +65,11 @@ namespace blue {
 		template<class T> File& operator<< ( T &pMsg );
 
 
-		/// Static Methods
+		// Static Methods
 			/// Check if a file exists on drive
 			/// @param pFilename : path to the file
 			static bool Exists( const std::string &pFilename );
+
 
 	protected:
 		std::fstream mFile;			///< File buffer

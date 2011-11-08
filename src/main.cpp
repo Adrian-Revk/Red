@@ -1,6 +1,6 @@
 #include "File.hpp"
 #include "Context.hpp"
-#include "Clock.hpp"
+#include "Scene.hpp"
 #include "Logger.hpp"
 #include "Lua/RedLua.hpp"
 
@@ -8,7 +8,23 @@
 #include "GL/glew.h"
 
 
-using namespace blue;
+#include "GL/SOIL.h"
+
+/*
+		TODO
+	
+    - textures
+	- camera
+    - frustum culling
+    - scene hierarchy (octree)
+
+*/
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//						TEST STUFF
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using namespace red;
 int function1( lua_State *L ) {
 	int argCount = Lua::GetArgCount( L );
 	
@@ -21,7 +37,7 @@ public:
 	luaClass( lua_State* ) {}
 
 	int testFunc( lua_State* ) {
-		printf("oyeabertet\n" );
+		printf("luaClass::testFunc OK!\n" );
 		return 1;
 	}
 
@@ -46,12 +62,40 @@ public:
 	}
 };
 
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 int main ( int argc, char* argv[] ) {
 	LogManager::Call().Init();
 	Context::Call().Initialize( 800, 600 );
 
+
+	Renderer* rend = Context::Call().GetRenderer();
+	Scene scene( rend );
+
+
+    GLuint tex = SOIL_load_OGL_texture( "img_test.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT );
+
+	Shader* s = rend->CreateShaderFromFile( "phong.vs", "phong.fs" );
+
+	s->BindAttribLocation( "Position", 0 );
+	s->BindAttribLocation( "Normal", 1 );
+	s->Link();
+	s->Bind();
+	s->SendFloat( "SurfaceSmooth", 256.f );
+	s->SendVector3( "SurfaceDiffuse", glm::vec3( 0.9f, 0.5f, 1 ) );
+	s->SendVector3( "SurfaceSpecular", glm::vec3( 0.3f, 0.3f, 0.3f ) );
+
+
 	//listtest t;
 	//EventManager::Call().AddListener( t );
+
+    Mesh* m = rend->LoadMesh( "sphere.obj" );
+	u32 entity = scene.AddEntity( m, s, glm::mat4() );
 
 	Lua lua;
 	lua.RegisterFunction( "function1", function1 );
@@ -64,31 +108,32 @@ int main ( int argc, char* argv[] ) {
 		printf( "%s\n", lua.CallFunction( "hur", "d", hur ).ToString().c_str() );
 	}
 	
-	int MVersion, mVersion;
-	glGetIntegerv( GL_MAJOR_VERSION, &MVersion );
-	glGetIntegerv( GL_MINOR_VERSION, &mVersion );
 
-	DebugLog << "OpenGL version " << MVersion << "." << mVersion << eol;
-	DebugLog << "GLSL " << glGetString( GL_SHADING_LANGUAGE_VERSION ) << eol;
-	DebugLog << "Hardware : " << glGetString( GL_VENDOR ) << " - " << glGetString( GL_RENDERER ) << eol;
-	
-	bool run = true;
-	while(run) {
-		run = !EventManager::Call().IsKeyUp( Escape ) && Context::Call().IsOpened(); 
+	while( !EventManager::Call().IsKeyUp( Escape ) && Context::Call().IsOpened() ) {
 		
+		glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 
-		if( EventManager::Call().IsWheelUp() )
-			DebugLog << "wheelup" << eol;
-		if( EventManager::Call().IsWheelDown() )
-			DebugLog << "wheeldown" << eol;
+
+		static float rotY, rotX;
+		const glm::mat4 world = glm::rotate( glm::degrees( rotY += Context::Call().GetFrameTime() ), 0.0f, 1.0f, 0.0f )
+						* glm::rotate( glm::degrees( rotX += Context::Call().GetFrameTime() ), 1.f, 0.f, 0.f );
+		
+		scene.SetEntityMatrix( entity, world );
+
+		scene.Render();
 
 		EventManager::Call().Update();
 		Context::Call().Update();
 	}
+
+
 	EventManager::Kill();
 	Context::Kill();
 	LogManager::Kill();
 
+#ifdef _WIN32
+	system("PAUSE");
+#endif
 
 	return 0;
 }

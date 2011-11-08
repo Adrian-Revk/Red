@@ -1,6 +1,6 @@
 #include "RedLua.hpp"
 
-namespace blue {
+namespace red {
 	Lua::Lua() : mState(lua_open()){
 		luaL_openlibs(mState);
 	}

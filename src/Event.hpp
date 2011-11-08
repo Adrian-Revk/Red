@@ -3,7 +3,7 @@
 
 #include "Keys.hpp"
 
-namespace blue {
+namespace red {
 
 	/// Event object binding a Type of Event to the value
 	/// changed by the event.

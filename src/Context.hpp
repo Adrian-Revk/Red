@@ -3,10 +3,14 @@
 
 #include "Singleton.hpp"
 #include "EventManager.hpp"
+#include "Clock.hpp"
+#include "Renderer.hpp"
+
+//#include "AntTweakBar\include\AntTweakBar.h"
 
 #include <vector>
 
-namespace blue {
+namespace red {
 
 
 	/// Class initializing and maintaining a valid OpenGL Context associated with
@@ -45,6 +49,12 @@ namespace blue {
 		/// Show or Hide the cursor
 		void ShowCursor( bool pVal );
 
+		/// Returns the context renderer
+		Renderer* GetRenderer() { return &mRenderer; }
+
+		/// Return the time interval between 2 frames
+		f32 GetFrameTime() const { return mTimeStep; }
+
 
 	private:
 		bool mInit;						///< Initialized flag for the context, one at a time
@@ -54,6 +64,11 @@ namespace blue {
 		u32 mFSAALevel;					///< FSAA Level
 		std::vector<glm::vec2> mVModes;	///< Vector of all Video Modes available
 
+		Clock	mClock;					///< Context main clock
+		f32		mLastTime,				///< Last frame time
+				mTimeStep;				///< Time step between 2 frames
+
+		Renderer mRenderer;				///< OpenGL Renderer
 
 		/// Check if a given resolution is available
 		bool ResolutionAvailable( u32 pWidth, u32 pHeight );

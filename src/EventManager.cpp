@@ -1,6 +1,6 @@
 #include "EventManager.hpp"
 
-namespace blue {
+namespace red {
 	EventManager& EvtManager = EventManager::Call();
 
 	void KeyPressedCallback( int pKey, int pValue ) {

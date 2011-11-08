@@ -1,6 +1,6 @@
 #include "AABB.hpp"
 
-namespace blue {
+namespace red {
 	AABB::AABB( glm::vec3 pOrigin, glm::vec3 pEnd ) : mOrigin( pOrigin ), mEnd( pEnd ){
 	}
 

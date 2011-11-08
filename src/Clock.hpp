@@ -4,7 +4,7 @@
 
 #include "Shared.hpp"
 
-namespace blue {
+namespace red {
 	/// Returns system time, depending on platform
     /// @return the UTC time, seconds only
 	f64 GetSystemTime();

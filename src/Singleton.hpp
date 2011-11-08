@@ -2,12 +2,12 @@
 #define SINGLETON_HPP
 
 
-namespace blue {
+namespace red {
 	/// Classic Singleton class to store an object pointer in its only instance
     template<class T>
 	class Singleton{
         private:
-            static T *mSingleton;	///< Pointer on object stored by singleton
+            static T *mSingleton;	///< Pointer on stored object
 
             /// Copy Ctor, forbidden
             Singleton( Singleton & ) {}

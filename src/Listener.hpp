@@ -13,7 +13,7 @@
 
 #include <vector>
 
-namespace blue {
+namespace red {
 	
 	/// Abstract class for all Input Listeners
 	class Listener {

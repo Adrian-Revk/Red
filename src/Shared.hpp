@@ -5,20 +5,14 @@
 	// Version
 	#define RED_MAJOR 0
 	#define RED_MINOR 0
-	#define RED_PATCH 1
+	#define RED_PATCH 10
 
 	// Platform
 	#if defined(_WIN32) || defined(WIN32)
-	#	define BLUE_WIN32
-//	#	ifndef GLFWCALL
-//	#		define GLFWCALL __stdcall
-//	#	endif
+	#	define RED_WIN32
 	#	include <time.h>
 	#else
-	#	define BLUE_LINUX
-//	#	ifndef GLFWCALL
-//	#		define GLFWCALL
-//	#	endif
+	#	define RED_LINUX
 	#	include <sys/time.h>
 	#endif
 
@@ -26,9 +20,14 @@
 	// Commonly used stuff
 	#include <string>
 	#include <cstring>
+    #include <vector>
 
 	// Math library
 	#include "glm/glm.hpp"
+	#include "glm/gtc/matrix_transform.hpp"
+	#include "glm/gtc/type_ptr.hpp"
+	#include "glm/gtx/transform.hpp"
+	#include "glm/gtx/transform2.hpp"
 
 	// Engine Types
 	#include "Types.hpp"
@@ -53,4 +52,11 @@
 		strftime( ret, 16, "%a %d %b %Y", temps );
 		return ret;
 	}
+
+    /// Returns whether a string is a comment or not
+    bool IsComment( std::string &pS, const std::string &pChar = "//" ); 
+
+    /// Returns an array of strings splitted from an original string
+    std::vector<std::string> SplitString( const std::string &pS, const std::string &pTokens );
+        
 #endif

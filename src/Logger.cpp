@@ -1,6 +1,6 @@
 #include "Logger.hpp"
 
-namespace blue {
+namespace red {
 ///			Logger Interface			///
 	LogManager::LogManager() : mUseLoggers( false ), mCurrInstance(0) {
 	}

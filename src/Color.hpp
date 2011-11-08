@@ -4,7 +4,7 @@
 
 #include "Shared.hpp"
 
-namespace blue {
+namespace red {
 	/// Color class with RGBA Components
 	class Color{
 	public:

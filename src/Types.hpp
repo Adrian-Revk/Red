@@ -2,7 +2,7 @@
 #define TYPES
 
 
-namespace blue {
+namespace red {
 
 #ifdef _MSC_VER
 	typedef unsigned __int8		u8;

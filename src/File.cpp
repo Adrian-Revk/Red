@@ -2,7 +2,7 @@
 #include "File.hpp"
 
 
-namespace blue {
+namespace red {
 	File::File() : mFileName( "" ) {
 	}
 
@@ -66,7 +66,7 @@ namespace blue {
 		return line;
 	}
 
-    std::string File::Read() const {
+    std::string File::Content() const {
 		if( mFile ){
 			std::stringstream buffer;
 			buffer << mFile.rdbuf();

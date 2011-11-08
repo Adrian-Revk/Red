@@ -5,7 +5,7 @@
 #include "Shared.hpp"
 #include "Listener.hpp"
 
-namespace blue {
+namespace red {
 	
 	/// Manage real time events from GLFW callbacks
 	/// and distribute them to all registered listeners

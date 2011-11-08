@@ -5,7 +5,7 @@
 #include "LuaValue.hpp"
 #include "Lunar.hpp"
 
-namespace blue {
+namespace red {
 	/// Lua function template
 	/// Style :  int functionName(lua_State* L);
 	typedef lua_CFunction LuaFunctionType;

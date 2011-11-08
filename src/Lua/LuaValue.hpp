@@ -4,7 +4,7 @@
 #include "Shared.hpp"
 #include "Lua/lua.hpp"
 
-namespace blue {
+namespace red {
 
 	/// Union of all possible Lua Value Type, plus functions for easeofuse
 	class LuaValue {

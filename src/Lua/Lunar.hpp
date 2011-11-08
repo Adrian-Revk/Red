@@ -1,6 +1,6 @@
 #include "Lua/lua.hpp"
 
-namespace blue {
+namespace red {
 	template <typename T> class Lunar {
 		typedef struct { T *pT; } userdataType;
 	public:

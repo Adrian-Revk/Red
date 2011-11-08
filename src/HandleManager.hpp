@@ -6,7 +6,7 @@
 
 #include <vector>
 
-namespace blue {
+namespace red {
 
 	/// Single Entry in the HandleManager. Store the actual data and the index
 	/// of the next possible index for the HM to use
@@ -54,7 +54,7 @@ namespace blue {
 
 	template<class T>
 	HandleManager<T>::~HandleManager() {
-		for( u32 i = 0; i < mEntryCount; ++i )
+		for( u32 i = 0; i < mEntries.size(); ++i )
 			delete mEntries[i].mData;
 	}
 

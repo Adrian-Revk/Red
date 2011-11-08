@@ -1,13 +1,13 @@
 #include "Clock.hpp"
 
-#ifdef BLUE_WIN32
+#ifdef RED_WIN32
 #	include <Windows.h>
 #endif
 
-namespace blue {
+namespace red {
 // ==============================  //
 	f64 GetSystemTime(){
-		#if defined(BLUE_WIN32)
+		#if defined(RED_WIN32)
 			static LARGE_INTEGER Frequency;
 			static BOOL          UseHighPerformanceTimer = QueryPerformanceFrequency(&Frequency);
 
@@ -33,7 +33,7 @@ namespace blue {
 	}
 
 	void Sleep(f32 pTime){
-		#if defined(BLUE_WIN32)
+		#if defined(RED_WIN32)
 			::Sleep(static_cast<DWORD>(pTime * 1000));
 		#else
 			usleep(static_cast<u32>(pTime * 1000000));

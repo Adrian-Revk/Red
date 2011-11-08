@@ -97,6 +97,7 @@
     <ClInclude Include="..\src\Event.hpp" />
     <ClInclude Include="..\src\EventManager.hpp" />
     <ClInclude Include="..\src\File.hpp" />
+    <ClInclude Include="..\src\GLO.hpp" />
     <ClInclude Include="..\src\HandleManager.hpp" />
     <ClInclude Include="..\src\Keys.hpp" />
     <ClInclude Include="..\src\Listener.hpp" />
@@ -104,6 +105,10 @@
     <ClInclude Include="..\src\Lua\LuaValue.hpp" />
     <ClInclude Include="..\src\Lua\Lunar.hpp" />
     <ClInclude Include="..\src\Lua\RedLua.hpp" />
+    <ClInclude Include="..\src\Mesh.hpp" />
+    <ClInclude Include="..\src\Renderer.hpp" />
+    <ClInclude Include="..\src\Scene.hpp" />
+    <ClInclude Include="..\src\Shader.hpp" />
     <ClInclude Include="..\src\Shared.hpp" />
     <ClInclude Include="..\src\Singleton.hpp" />
     <ClInclude Include="..\src\Types.hpp" />
@@ -119,6 +124,10 @@
     <ClCompile Include="..\src\Lua\LuaValue.cpp" />
     <ClCompile Include="..\src\Lua\RedLua.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\Mesh.cpp" />
+    <ClCompile Include="..\src\Renderer.cpp" />
+    <ClCompile Include="..\src\Scene.cpp" />
+    <ClCompile Include="..\src\Shader.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

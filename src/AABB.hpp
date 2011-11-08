@@ -4,7 +4,7 @@
 #include "Shared.hpp"
 #include "glm/gtc/quaternion.hpp"
 
-namespace blue {
+namespace red {
 	struct Vertex;
 
 	/// Axis-Aligned Bounding Box Class

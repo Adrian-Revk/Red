@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-namespace blue {
+namespace red {
 	LuaValue::LuaValue() : mDataType( LUA_TNIL ) {
 	}
 
