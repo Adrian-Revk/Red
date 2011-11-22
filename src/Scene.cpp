@@ -6,18 +6,31 @@ namespace red {
 		m3DViewMatrix = glm::lookAt( glm::vec3( 4.f, 4.f, 4.f ), glm::vec3( 0.f,0.f,0.f ), glm::vec3( 0.f,1.f,0.f ));
 
 		m3DProjViewMatrix = mRenderer->GetProjectionMatrix() * m3DViewMatrix;
+
+        //mWorldMatrices.ManageMemory( true );
 	}
 
-	u32 Scene::AddEntity( Mesh* pMesh, Shader* pShader, glm::mat4 pMatrix ) {
-		mMeshes.push_back( pMesh );
-		mShaders.push_back( pShader );
-		mWorldMatrices.push_back( pMatrix );
+	u32 Scene::AddEntity( Mesh* pMesh, Shader* pShader, const glm::mat4 &pMatrix ) {
+        u32 Handle = mMeshes.AddEntry( pMesh );
+        u32 hS = mShaders.AddEntry( pShader );
+        u32 hM = mWorldMatrices.AddEntry( pMatrix );
 
-		return mMeshes.size() - 1;
+        if( Handle != hS || Handle != hM || hS != hM )
+            DebugLog << "Scene Error : Stored Mesh/Shader/Matrices in HandleManagers arent parallels!!!!" << eol;
+
+		//mMeshes.push_back( pMesh );
+		//mShaders.push_back( pShader );
+		//mWorldMatrices.push_back( pMatrix );
+
+		//return mMeshes.size() - 1;
+        return Handle;
 	}
 
 	void Scene::Render() {
-		for( u32 i = 0; i < mMeshes.size(); ++i ) {
+		for( u32 i = 0; i < mMeshes.Size(); ++i ) {
+            if( !mMeshes.GetEntry(i).mUsed )
+                continue;
+
 			if( i && mShaders[i] != mShaders[i-1] )
 					mShaders[i]->Bind();
 			
@@ -30,7 +43,7 @@ namespace red {
 	}
 
 	void Scene::SetEntityMatrix( u32 pEntity, const glm::mat4 &pMatrix ) {
-		if( pEntity < mWorldMatrices.size() )
-			mWorldMatrices[pEntity] = pMatrix;
+		if( pEntity < mWorldMatrices.Size() )
+			mWorldMatrices.Set( pEntity, pMatrix );
 	}
 }

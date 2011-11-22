@@ -3,6 +3,7 @@
 
 #include "Shader.hpp"
 #include "Mesh.hpp"
+#include "Texture.hpp"
 
 #include <vector>
 
@@ -27,7 +28,9 @@ namespace red {
 							const glm::vec3* pNorm, u32 pNormSize,
 							const u32* pIndices, u32 pIndicesSize );
 
-        Mesh* LoadMesh( const std::string &pFileName );
+        /// Returns a mesh created from model file ( Wavefront OBJ only )
+        /// @param pFileName : file name of the OBJ file
+        Mesh* CreateMeshFromFile( const std::string &pFileName );
 
 
 		/// Returns a shader program created from direct Source string
@@ -40,12 +43,17 @@ namespace red {
 		/// @param pFS : string containing the Fragment Shader filename
 		Shader* CreateShaderFromFile( const std::string &pVS, const std::string &pFS );
 
+        /// Returns a texture created from image file
+        /// @param pFileName : file name of the image file
+        Texture* CreateTextureFromFile( const std::string &pFileName );
+
 		/// Returns the current 3d projection matrix
 		glm::mat4 GetProjectionMatrix() const { return m3DProjectionMatrix; }
 
 	private:
 		std::vector<Shader*>	mShaders;				///< List of created shaders
 		std::vector<Mesh*>		mMeshes;				///< List of created meshes
+        std::vector<Texture*>   mTextures;              ///< List of created textures
 
 		// Matrices
 			glm::mat4			m3DProjectionMatrix;	///< Projection Matrix for 3d perspective

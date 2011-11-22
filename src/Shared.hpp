@@ -35,6 +35,22 @@
 	// End Of Line
 	#define eol "\n"
 
+	// delete a pointer and set to NULL
+	#ifndef DEL_PTR
+	#define DEL_PTR(ptr) do {if (ptr) {        \
+							   delete (ptr);   \
+							   (ptr) = nullptr;}}    \
+						 while (0)
+	#endif
+
+	// delete a pointer and set to NULL
+	#ifndef DEL_ARRAY_PTR
+	#define DEL_ARRAY_PTR(ptr) do {if (ptr) {           \
+									   delete [] (ptr); \
+									   (ptr) = nullptr;}}     \
+							   while (0)
+	#endif
+
 	/// Returns time in "HH:MM:SS" format
 	inline std::string GetTime(){
 		time_t tps = time( NULL );

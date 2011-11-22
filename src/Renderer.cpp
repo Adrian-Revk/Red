@@ -3,6 +3,8 @@
 #include "Logger.hpp"
 
 #include "GL/glew.h"
+#include "GL/SOIL.h"
+
 #include <sstream>
 #include <map>
 
@@ -16,6 +18,9 @@ namespace red {
 	Renderer::~Renderer() {
 		for(u32 i = 0; i < mShaders.size(); ++i)
 			delete mShaders[i];
+		
+		for(u32 i = 0; i < mTextures.size(); ++i)
+			delete mTextures[i];
 		
 		for(u32 i = 0; i < mMeshes.size(); ++i)
 			delete mMeshes[i];
@@ -38,20 +43,20 @@ namespace red {
 		return m;
 	}
 
-    Mesh* Renderer::LoadMesh( const std::string &pFileName ) {
+    Mesh* Renderer::CreateMeshFromFile( const std::string &pFileName ) {
 
         File objFile( pFileName, RWM_ReadOnly );
 
 		if( !objFile.IsOpened() ) {
 			DebugLog << "Renderer::LoadMesh : Cant open file " << pFileName << eol;
-			return NULL;
+			return nullptr;
 		}
 
-    struct face {
-        int pos;
-        int tex;
-        int norm;
-    };
+        struct face {
+            int pos;
+            int tex;
+            int norm;
+        };
 
         std::vector<face> faces;                    // vector of faces of object in file
         std::vector<glm::vec3> positions, normals;  // vectors of first pass positions and normals retrieving
@@ -143,6 +148,18 @@ namespace red {
         return ret;
     }
 
+    Texture* Renderer::CreateTextureFromFile( const std::string &pFileName ) {
+        Texture* t = new Texture();
+
+        GLuint tex = SOIL_load_OGL_texture( pFileName.c_str(), SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT );
+
+        t->mTexture = tex;
+
+        mTextures.push_back( t );
+        return t;
+    }
+
+
 	Shader* Renderer::CreateShader( const std::string &pVS, const std::string &pFS ) {
 		Shader* s = new Shader();
 		s->BuildProgram( pVS, pFS );
@@ -156,13 +173,13 @@ namespace red {
 		File vs( pVS, RWM_ReadOnly );
 		if( !vs.IsOpened() ) {
 			DebugLog << "Error cant open file " << pVS << eol;
-			return NULL;
+			return nullptr;
 		}
 
 		File fs( pFS, RWM_ReadOnly );
 		if( !fs.IsOpened() ) {
 			DebugLog << "Error : Can't open file " << pFS << eol;
-			return NULL;
+			return nullptr;
 		}
 
 		Shader* s = new Shader();

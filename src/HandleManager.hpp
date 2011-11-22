@@ -13,36 +13,47 @@ namespace red {
 	template<class T>
 	class HandleEntry {
 	public:
-		HandleEntry() : mData( NULL ), mNextFreeIndex( 0 ) {}
+		HandleEntry() : mNextFreeIndex( 0 ), mUsed( false ) {}
 
-		T* 		mData;				///< Pointer to a T object. Actual Data
+		T 		mData;				///< Pointer to a T object. Actual Data
 		u32 	mNextFreeIndex;		///< Next index that will be usable by the HM
+        bool    mUsed;              ///< True if the Entry is in use
 	};
 
 
 	/// Container using indices and dynamic directing to store single entries 
 	/// containing a unique sort of data. The user of the HM provides the Data he wants
 	/// to store and the HM returns him a handle(u32) directing him to it.
-	/// The HM automatically destroy all Data stored when deleted.
+	/// The HM does not care about memory managment and this should be done elsewhere.
+    /// It is just a dynamic storage. Nothing is new'ed or delete'd.
 	template<class T>
 	class HandleManager {
 	public:
 		HandleManager() : mEntryCount( 0 ), mCapacity( 0 ), mFirstFreeIndex( 0 ) { }
-		~HandleManager();
 		
 		/// Add a new entry to the HM at the FirstFreeIndex, storing the pointer in it
 		/// @param pData : pointer to the data to store in it
 		/// @return : the handle to the location where the data was stored
-		u32 AddEntry( T* pData );
+		u32 AddEntry( T pData );
 
 		/// Remove an existing entry. Delete the Data if present
 		/// @param pHandle : Index where the removal must occur
 		void RemoveEntry( u32 pHandle );
 
+		/// Returns the entry present at a given Index
+		/// @param pHandle : Index of the wanted entry
+		HandleEntry<T> GetEntry( u32 pHandle );
+
 		/// Returns the data present at a given Index
 		/// @param pHandle : Index of the wanted data
-		T* GetEntry( u32 pHandle );
+        T& operator[]( u32 pHandle); 
 
+        /// Sets the value of the Data at a given Index
+        /// @param pHandle : Index of the data changed
+        void Set( u32 pHandle, const T& pVal );
+
+        /// Returns the number of slots in mEntries, occupied or not
+        u32 Size() const { return mCapacity; }
 
 	private:
 		std::vector<HandleEntry<T>> mEntries;			///< Array of Entries of data
@@ -52,14 +63,9 @@ namespace red {
 
 	};
 
-	template<class T>
-	HandleManager<T>::~HandleManager() {
-		for( u32 i = 0; i < mEntries.size(); ++i )
-			delete mEntries[i].mData;
-	}
 
 	template<class T>
-	u32 HandleManager<T>::AddEntry( T* pData ) {
+	u32 HandleManager<T>::AddEntry( T pData ) {
 		u32 handle = mFirstFreeIndex;
 
 		if( handle == mCapacity ) {
@@ -68,6 +74,7 @@ namespace red {
 		}
 			
 		mEntries[handle].mData = pData;
+        mEntries[handle].mUsed = true;
 
 		mFirstFreeIndex = mEntries[handle].mNextFreeIndex;
 
@@ -84,23 +91,26 @@ namespace red {
 			mFirstFreeIndex = pHandle;
 			mEntries[pHandle].mNextFreeIndex = nextFree;
 
-			// Destroy the actual data
-			delete mEntries[pHandle].mData;
-			mEntries[pHandle].mData = NULL;
+            mEntries[pHandle].mUsed = false;
 
 			--mEntryCount;
 		}
 	}
 
 	template<class T>
-	T* HandleManager<T>::GetEntry( u32 pHandle ) {
-		T* ret = NULL;
-		
-		if( pHandle >= 0 && pHandle < mCapacity ) 
-			ret = mEntries[pHandle].mData;
-
-		return ret;
+	HandleEntry<T> HandleManager<T>::GetEntry( u32 pHandle ) {
+		return mEntries[pHandle];
 	}
+
+    template<class T>
+    T& HandleManager<T>::operator[]( u32 pHandle ) {
+        return mEntries[pHandle].mData;
+    }
+
+    template<class T>
+    void HandleManager<T>::Set( u32 pHandle, const T& pVal ) {
+        mEntries[pHandle].mData = pVal;
+    }
 }
 
 #endif

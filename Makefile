@@ -28,7 +28,8 @@ src/Mesh.o\
 src/Renderer.o\
 src/Scene.o\
 src/Shader.o\
-src/Shared.o
+src/Shared.o\
+src/Texture.o
 
 
 LIB = \

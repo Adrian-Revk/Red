@@ -78,8 +78,8 @@ int main ( int argc, char* argv[] ) {
 	Scene scene( rend );
 
 
-    GLuint tex = SOIL_load_OGL_texture( "img_test.png", SOIL_LOAD_AUTO, SOIL_CREATE_NEW_ID, SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT );
 
+    Texture* t = rend->CreateTextureFromFile( "img_test.png" );
 	Shader* s = rend->CreateShaderFromFile( "phong.vs", "phong.fs" );
 
 	s->BindAttribLocation( "Position", 0 );
@@ -94,8 +94,9 @@ int main ( int argc, char* argv[] ) {
 	//listtest t;
 	//EventManager::Call().AddListener( t );
 
-    Mesh* m = rend->LoadMesh( "sphere.obj" );
-	u32 entity = scene.AddEntity( m, s, glm::mat4() );
+    Mesh* m = rend->CreateMeshFromFile( "sphere.obj" );
+    glm::mat4 identity;
+	u32 entity = scene.AddEntity( m, s, identity );
 
 	Lua lua;
 	lua.RegisterFunction( "function1", function1 );
